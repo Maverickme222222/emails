@@ -37,7 +37,7 @@ func main() {
 	s := grpc.NewServer()
 
 	pb.RegisterEmailManagementServer(s, &EmailManagementServer{})
-	log.Printf("Server listening at %v", listen.Addr().String())
+	log.Printf("Emails Server listening at %v", listen.Addr().String())
 	if err := s.Serve(listen); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
