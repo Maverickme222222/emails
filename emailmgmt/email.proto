@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package emailmgmt;
+
+option go_package = "github.com/Maverickme222222/emails/emailmgmt";
+
+service EmailManagement {
+    rpc CreateNewEmail(NewEmail) returns (NewEmailResponse) {}
+}
+
+message NewEmail {
+    string name = 1;
+}
+
+message NewEmailResponse {
+    string name = 1;
+}
