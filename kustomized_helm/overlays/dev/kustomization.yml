@@ -12,3 +12,6 @@ commonLabels:
 
 resources:
 - namespace.yml
+
+patchesStrategicMerge:
+- ./patch/deployment_patch.yml
