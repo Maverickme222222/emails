@@ -34,7 +34,7 @@ WORKDIR /app
 
 # Copy the Pre-built binary file from the previous stage.
 COPY --from=builder /app/main .
-COPY --from=builder /bin/grpc_health_probe ./grpc_health_probe
+COPY --from=builder /bin/grpc_health_probe /bin/grpc_health_probe
 
 # Expose port 9090 to the outside world
 EXPOSE 9090

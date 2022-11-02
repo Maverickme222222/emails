@@ -27,13 +27,14 @@ spec:
           ports:
             - name: grpc
               containerPort: 9090
-          readinessProbe:
-            exec:
-              command: ["/grpc_health_probe", "-addr=:9090"]
-            initialDelaySeconds: 5
           livenessProbe:
             exec:
-              command: ["/grpc_health_probe", "-addr=:9090"]
+              command: ["/bin/grpc_health_probe", "-addr=:9090"]
+            initialDelaySeconds: 10
+          readinessProbe:
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:9090"]
+            initialDelaySeconds: 5
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
