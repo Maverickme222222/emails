@@ -1,12 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "emails.fullname" . }}
+  name: emails-svc
   labels:
-    app: {{ template "emails.name" . }}
-    chart: {{ template "emails.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app: emails-svc
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -14,5 +11,5 @@ spec:
       targetPort: {{ .Values.service.port }}
       name: grpc
   selector:
-    app: {{ template "emails.name" . }}
-    release: {{ .Release.Name }}
+    app: emails
+    version: v1
