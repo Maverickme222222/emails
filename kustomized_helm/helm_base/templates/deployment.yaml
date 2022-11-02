@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "helm-guestbook.fullname" . }}
+  name: {{ template "emails.fullname" . }}
   labels:
-    app: {{ template "helm-guestbook.name" . }}
-    chart: {{ template "helm-guestbook.chart" . }}
+    app: {{ template "emails.name" . }}
+    chart: {{ template "emails.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
@@ -12,12 +12,12 @@ spec:
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: {{ template "helm-guestbook.name" . }}
+      app: {{ template "emails.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "helm-guestbook.name" . }}
+        app: {{ template "emails.name" . }}
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -26,15 +26,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: grpc
-              containerPort: 9998
-          livenessProbe:
-            httpGet:
-              path: /
-              port: grpc
+              containerPort: 9090
           readinessProbe:
-            httpGet:
-              path: /
-              port: grpc
+            exec:
+              command: ["/grpc_health_probe", "-addr=:9090"]
+            initialDelaySeconds: 5
+          livenessProbe:
+            exec:
+              command: ["/grpc_health_probe", "-addr=:9090"]
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}

@@ -8,7 +8,9 @@ import (
 	"net"
 
 	pb "github.com/Maverickme222222/emails/emailmgmt"
+	"github.com/Maverickme222222/emails/health"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health/grpc_health_v1"
 )
 
 const (
@@ -37,6 +39,10 @@ func main() {
 	s := grpc.NewServer()
 
 	pb.RegisterEmailManagementServer(s, &EmailManagementServer{})
+
+	healthService := health.NewHealthChecker()
+	grpc_health_v1.RegisterHealthServer(s, healthService)
+
 	log.Printf("Emails Server listening at %v", listen.Addr().String())
 	if err := s.Serve(listen); err != nil {
 		log.Fatalf("failed to serve: %v", err)
