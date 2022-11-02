@@ -12,3 +12,4 @@ commonLabels:
 
 resources:
 - namespace.yml
+- patch/deployment_patch.yml
