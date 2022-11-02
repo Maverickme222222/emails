@@ -1,6 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helm-guestbook-app-dev-emails
+  name: emails
 spec:
   replicas: 1
